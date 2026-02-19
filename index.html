@@ -17,6 +17,7 @@
       <a href="#experience" class="nav-link">Experience</a>
       <a href="#projects" class="nav-link">Projects</a>
       <a href="#education" class="nav-link">Education</a>
+      <a href="#blog-preview" class="nav-link">Blog</a>
       <a href="#cta" class="nav-link">Contact</a>
     </nav>
   </header>
@@ -65,6 +66,25 @@
         <h2 class="section-title">Where I've Worked</h2>
 
         <div class="experience-list">
+
+            <article class="experience-card fade-in">
+            <div class="card-top-section">
+              <img src="images/HTU.png" alt="HTU Logo" class="company-logo">
+              <div class="card-header-info">
+                <div class="experience-header">
+                  <div>
+                    <h3>9XAI Fellow (Lighthouse Cohort)</h3>
+                    <p class="experience-company">HTU & NCFT</p>
+                  </div>
+                  <span class="experience-period">Feb 2026 – Present</span>
+                </div>
+                <div class="tech-tags">
+                  <span class="tech-tag">Project Management</span>
+                </div>
+              </div>
+            </div>
+            <p class="experience-description">Selected as 1 of 20 fellows for the inaugural national AI initiative, following a competitive, multi-stage evaluation process. The initiative, which is being hosted by Al Hussein Technical University (HTU) and National Council for Future Technology (NCFT), focuses on developing and validating AI solutions across Jordan's institutional and governmental partners while tackling nationwide challenges.</p>
+          </article>
           
           <article class="experience-card fade-in">
             <div class="card-top-section">
@@ -72,10 +92,10 @@
               <div class="card-header-info">
                 <div class="experience-header">
                   <div>
-                    <h3>Junior AI Engineer</h3>
+                    <h3>Junior Artificial Intelligence Engineer</h3>
                     <p class="experience-company">z28.ai</p>
                   </div>
-                  <span class="experience-period">Feb 2026 – Present</span>
+                  <span class="experience-period">Feb 2026</span>
                 </div>
                 <div class="tech-tags">
                   <span class="tech-tag">BigQuery</span>
@@ -361,6 +381,19 @@
       </div>
     </section>
 
+    <section id="blog-preview">
+      <div class="container">
+        <span class="section-label">Blog</span>
+        <h2 class="section-title">Latest Thoughts</h2>
+        <div class="blog-preview-grid" id="blog-preview-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="blog-preview-cta">
+          <a href="blogs.html" class="btn btn-secondary">View All Articles &rarr;</a>
+        </div>
+      </div>
+    </section>
+
     <section id="cta">
       <div class="cta-content">
         <h2>Let's Build Something Meaningful</h2>
@@ -388,6 +421,8 @@
     <p><span id="year"></span></p>
   </footer>
 
+  <script src="blog-data.js"></script>
+  <script src="blog.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+
+# Legacy blog files (old single-article template, replaced by folders)
+blog-post.html
+
+blogs/sample
