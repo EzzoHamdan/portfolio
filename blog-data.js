@@ -3,14 +3,15 @@
  * Each post is stored in its own folder under blogs/[slug]/
  * 
  * Contents of each post folder:
- *   - index.html   (article page)
  *   - data.js      (BLOG_POST object with metadata and content)
+ *
+ * All articles share the same template: blogs/blog.html
+ * The template dynamically loads the correct data.js based on the ?article= query parameter
  *
  * To add a new post:
  * 1. Create blogs/[slug]/ directory
  * 2. Create blogs/[slug]/data.js with BLOG_POST object
- * 3. Create blogs/[slug]/index.html article page
- * 4. Add an entry to BLOG_REGISTRY below
+ * 3. Add an entry to BLOG_REGISTRY below (path should be blogs/blog.html?article=[slug])
  *
  * Registry entry schema:
  * {
@@ -21,7 +22,7 @@
  *   tags:        string[] – Category labels for filtering
  *   excerpt:     string   – Short summary shown on cards
  *   thumbnail:   string   – Path to a card thumbnail (optional, falls back to gradient)
- *   path:        string   – Path to the post's index.html
+ *   path:        string   – Path to blogs/blog.html with ?article=[slug] query param
  * }
  */
 
@@ -34,6 +35,6 @@ const BLOG_REGISTRY = [
     tags: ["AI", "RAG", "NLP"],
     excerpt: "After deploying retrieval-augmented generation systems at Altibbi, here are the hard-won lessons about chunking strategies, embedding pipelines, and the importance of a solid evaluation framework.",
     thumbnail: "",
-    path: "blogs/building-rag-systems-lessons-learned/"
+    path: "blogs/blog.html?article=building-rag-systems-lessons-learned"
   }
 ];

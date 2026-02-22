@@ -3,8 +3,12 @@
  *           and homepage preview. Works entirely client-side.
  * 
  * Structure:
- * - blogs/[slug]/index.html contains BLOG_POST via data.js
- * - blog-data.js contains BLOG_REGISTRY with post metadata and paths
+ * - blogs/blog.html – shared template for all articles
+ * - blogs/[slug]/data.js – contains BLOG_POST for each article
+ * - blog-data.js – BLOG_REGISTRY with post metadata and paths
+ * 
+ * Article pages are accessed via: blogs/blog.html?article=[slug]
+ * The template dynamically loads the corresponding data.js file
  */
 (function () {
   'use strict';
@@ -22,10 +26,12 @@
 
   /* ───────── Card HTML ───────── */
 
-  function blogCardHTML(post) {
+  function blogCardHTML(post, from = 'blog') {
     const tagsHTML = post.tags.map(t => `<span class="blog-tag">${t}</span>`).join('');
+    // post.path already contains '?article=...', so append with '&' not '?'
+    const linkHref = `${post.path}&from=${from}`;
     return `
-      <a href="${post.path}" class="blog-card fade-in">
+      <a href="${linkHref}" class="blog-card fade-in">
         <div class="blog-card-inner">
           <div class="blog-card-meta">
             <time datetime="${post.date}">${formatDate(post.date)}</time>
@@ -94,6 +100,27 @@
     const bodyEl = document.getElementById('blog-article-body');
     const shareEl = document.getElementById('blog-share-links');
     if (!headerEl || !bodyEl) return;
+
+    const slug = getQueryParam('article');
+    if (!slug) return; // Not on an article page
+
+    // Dynamically load the data.js for this article
+    // Path is relative to the current page (blogs/blog.html), so just [slug]/data.js
+    const script = document.createElement('script');
+    script.src = `${slug}/data.js`;
+    script.onload = () => {
+      if (typeof BLOG_POST !== 'undefined') {
+        populateArticle(headerEl, bodyEl, shareEl);
+      }
+    };
+    script.onerror = () => {
+      console.error(`Failed to load article data: ${slug}/data.js`);
+      bodyEl.innerHTML = '<p style="color: #ff6b6b;">Error loading article content.</p>';
+    };
+    document.head.appendChild(script);
+  }
+
+  function populateArticle(headerEl, bodyEl, shareEl) {
     if (typeof BLOG_POST === 'undefined') return;
 
     const post = BLOG_POST;
@@ -150,6 +177,31 @@
         });
       });
     }
+
+    // Set intelligent back link
+    updateBackLink();
+  }
+
+  /* ───────── Intelligent Back Link ───────── */
+
+  function updateBackLink() {
+    const backLink = document.querySelector('.blog-back-link');
+    if (!backLink) return;
+
+    const from = getQueryParam('from');
+    let backHref = '../blogs.html'; // Default fallback
+    let backText = '&larr; Back to Blog'; // Default text
+
+    if (from === 'home') {
+      backHref = '../index.html#blog-preview';
+      backText = '&larr; Back to Home';
+    } else if (from === 'blog') {
+      backHref = '../blogs.html';
+      backText = '&larr; Back to Blog';
+    }
+
+    backLink.href = backHref;
+    backLink.innerHTML = backText;
   }
 
   /* ───────── Homepage Preview (latest 3) ───────── */
@@ -163,7 +215,7 @@
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 3);
 
-    grid.innerHTML = latest.map(blogCardHTML).join('');
+    grid.innerHTML = latest.map(post => blogCardHTML(post, 'home')).join('');
 
     grid.querySelectorAll('.fade-in').forEach(el => {
       el.classList.add('visible');

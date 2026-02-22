@@ -18,7 +18,4 @@ Thumbs.db
 dist/
 build/
 
-# Legacy blog files (old single-article template, replaced by folders)
-blog-post.html
-
-blogs/sample
+# Sample blog files 
