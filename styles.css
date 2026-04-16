@@ -1184,6 +1184,7 @@ footer span {
 /* ──────────────────────────────────────
    Blog — Listing Page
    ────────────────────────────────────── */
+/*
 
 /* Simplified blog header (blogs.html only) */
 .blog-header {
@@ -1645,6 +1646,7 @@ footer span {
   height: 14px;
   filter: invert(1);
 }
+*/
 
 @media (min-width: 1921px) {
   :root {
